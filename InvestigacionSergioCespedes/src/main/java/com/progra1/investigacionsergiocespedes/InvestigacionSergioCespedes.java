@@ -4,7 +4,7 @@
  */
 package com.progra1.investigacionsergiocespedes;
 
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,11 +18,11 @@ public class InvestigacionSergioCespedes {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        String User = JOptionPane.showInputDialog("Digite su Usuario");
-        String Password = JOptionPane.showInputDialog("Digite su Contraseña");;
+        //String User = JOptionPane.showInputDialog("Digite su Usuario");
+        //String Password = JOptionPane.showInputDialog("Digite su Contraseña");;
         
         Conexion_DB Connection = new Conexion_DB();
-        Connection.ConnectionDB(User,Password);
+        Connection.Consult();
     }
     
 }

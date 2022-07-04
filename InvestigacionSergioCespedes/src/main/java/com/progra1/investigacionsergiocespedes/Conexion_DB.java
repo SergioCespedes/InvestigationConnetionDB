@@ -6,39 +6,51 @@ package com.progra1.investigacionsergiocespedes;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import java.sql.Statement;
 
-/**
- *
- * @author sergi
- */
 public class Conexion_DB {
 
-    private static Connection con = null;
-    private static final String DB = "Investigacion_BD";
-    private static final String Ip = "localhost";
-    private static final String Port = "3306";
+    private Connection con = null;
+    private final String DB = "Investigacion_BD";
+    private final String Ip = "localhost";
+    private final String User = "root";
+    private final String Password = "Programador2022";
+    private final String Port = "3306";
 
     String Cadena = "jdbc:mysql://" + Ip + ":" + Port + "/" + DB;
 
-    public Connection ConnectionDB(String User, String Password) {
+    public Connection ConnectionDB() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
             con = DriverManager.getConnection(Cadena, User, Password);
-            JOptionPane.showMessageDialog(null, "Conectado a la base de datos");
             System.out.println("Conectado a la Base de Datos");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "No se conecto a la base de datos, Error:" + e.toString());
             System.out.println("No se conecto  a  la  Base  de  Datos, Error: " + e.toString());
         }
         return con;
     }
 
-    public String Consult(Connection Con) {
-        String res = "";
-        
-        return res;
+    //Metodo que consulta 
+    public void Consult() {
+        Connection connection = ConnectionDB();
+        Statement statament;
+        try {
+            statament = connection.createStatement();
+            ResultSet resultSet = statament.executeQuery("select id, nombre, primer_apellido, segundo_apellido, provincia, telefono from persona");
+            while (resultSet.next()) {             
+                System.out.println("Resultado de la consulta: \n ID: "+ resultSet.getString(1)+
+                                   " Nombre: "+ resultSet.getString(2)+
+                                   " Primer Apellido: " + resultSet.getString(3)+
+                                   " Segundo Apellido: "+ resultSet.getString(4)+
+                                   " Provincia:" + resultSet.getString(5)+
+                                   " Telefono:" + resultSet.getString(6)+"\n");
+            }
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println("Hubo un problemna con la Base de Datos, Error: " + ex.toString());
+        }
     }
 }
